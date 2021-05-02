@@ -1,3 +1,5 @@
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+my_models = [models.Task, models.Colour]
+admin.site.register(my_models)
