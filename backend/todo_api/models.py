@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from todo_rest import settings
 
-class Colour(models.Model):
+
+class Color(models.Model):
 
     name = models.CharField(max_length=255)
     hex_color = models.CharField(max_length=6, unique=True)
@@ -11,11 +13,18 @@ class Colour(models.Model):
         return f'{self.name}, #{self.hex_color}'
 
 
+class SubTask(models.Model):
+
+    text = models.CharField(max_length=255)
+    completed = models.BooleanField(default=False)
+
+
 class Task(models.Model):
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.CharField(max_length=510)
-    color = models.ForeignKey(Colour, on_delete=models.PROTECT, related_name='color')
+    subtask = models.ForeignKey(SubTask, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='color')
     completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
