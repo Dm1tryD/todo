@@ -13,17 +13,10 @@ class Color(models.Model):
         return f'{self.name}, #{self.hex_color}'
 
 
-class SubTask(models.Model):
-
-    text = models.CharField(max_length=255)
-    completed = models.BooleanField(default=False)
-
-
 class Task(models.Model):
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.CharField(max_length=510)
-    subtask = models.ForeignKey(SubTask, on_delete=models.CASCADE)
     color = models.ForeignKey(Color, on_delete=models.PROTECT, related_name='color')
     completed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
@@ -33,3 +26,13 @@ class Task(models.Model):
 
     def __str__(self):
         return f'{self.author}, {self.text}'
+
+
+class SubTask(models.Model):
+
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task')
+    text = models.CharField(max_length=255)
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.task.author}, {self.text}'
