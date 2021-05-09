@@ -45,6 +45,10 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
@@ -112,6 +116,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'users.validators.UppercaseValidator'
+    },
+    {
+        'NAME': 'users.validators.LowercaseValidator',
+    },
+    {
+        'NAME': 'users.validators.NumberValidator',
+    }
 ]
 
 
