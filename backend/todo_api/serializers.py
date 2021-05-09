@@ -5,6 +5,7 @@ from . import models
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
+            'id'
             'name',
             'hex_color'
         )
@@ -14,5 +15,18 @@ class ColorSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = '__all__'
+        fields = (
+            'id',
+            'author',
+            'text',
+            'color',
+            'completed'
+        )
         model = models.Task
+
+
+class SubTaskSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
+        model = models.SubTask
