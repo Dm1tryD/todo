@@ -5,7 +5,7 @@ from . import models
 class ColorSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'id'
+            'id',
             'name',
             'hex_color'
         )
@@ -23,6 +23,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'completed'
         )
         model = models.Task
+        read_only_fields = ('author',)
 
 
 class SubTaskSerializer(serializers.ModelSerializer):

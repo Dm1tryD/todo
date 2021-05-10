@@ -34,5 +34,8 @@ class SubTask(models.Model):
     text = models.CharField(max_length=255)
     completed = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return f'{self.task.author}, {self.text}'
