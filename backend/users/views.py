@@ -1,19 +1,15 @@
 from django.contrib.auth import logout, login
 from rest_framework import views, generics, response, permissions, authentication
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import CustomUser
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 
 
-class CsrfExemptSessionAuthentication(authentication.SessionAuthentication):
-    def enforce_csrf(self, request):
-        return
-
-
 class LoginView(views.APIView):
     permission_classes = (permissions.AllowAny,)
-    authentication_classes = (CsrfExemptSessionAuthentication,)
+    authentication_classes = (SessionAuthentication,)
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -31,7 +27,7 @@ class LogoutView(views.APIView):
 
 
 class RegisterView(generics.CreateAPIView):
-    authentication_classes = (CsrfExemptSessionAuthentication,)
+    authentication_classes = (SessionAuthentication,)
 
     queryset = CustomUser.objects.all()
     permission_classes = [AllowAny]
